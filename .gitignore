@@ -1,5 +1,7 @@
 backup/
 lib/
+
+*.dbg
 *.exe
 *.lps
 *.res
