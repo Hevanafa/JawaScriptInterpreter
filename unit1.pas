@@ -30,6 +30,7 @@ type
 
     var
       fLetterPairs: TStringDictionary;
+      fNumberPairs: TStringDictionary;
 
     procedure PerformTransliteration;
   public
@@ -54,6 +55,7 @@ begin
   OutputMemo.clear;
 
   fLetterPairs := TStringDictionary.create;
+  fNumberPairs := TStringDictionary.create;
 
   fLetterPairs.Add('h', 'ꦲ');
   fLetterPairs.add('n', 'ꦤ');
@@ -85,7 +87,19 @@ begin
   fLetterPairs.add('o', 'ꦴ');
   fLetterPairs.add('u', 'ꦸ');
 
-  { fLetterPairs.add('', ''); }
+  fNumberPairs.add('0', '꧐');
+  fNumberPairs.add('1', '꧑');
+  fNumberPairs.add('2', '꧒');
+  fNumberPairs.add('3', '꧓');
+  fNumberPairs.add('4', '꧔');
+
+  fNumberPairs.add('5', '꧕');
+  fNumberPairs.add('6', '꧖');
+  fNumberPairs.add('7', '꧗');
+  fNumberPairs.add('8', '꧘');
+  fNumberPairs.add('9', '꧙');
+
+  { fNumberPairs.add('', ''); }
 end;
 
 procedure TForm1.CopyButtonClick(Sender: TObject);
@@ -121,6 +135,12 @@ begin
       letter := inputQuery[idx];
 
       if (letter = '-') or (letter = 'a') then begin
+        inc(idx);
+        continue
+      end;
+
+      if letter[1] in ['0'..'9'] then begin
+        buffer := buffer + fNumberPairs[letter];
         inc(idx);
         continue
       end;
