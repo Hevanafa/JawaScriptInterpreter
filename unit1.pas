@@ -184,6 +184,15 @@ begin
 
       { Special cases }
 
+      if idx + 3 <= len then
+        { Handle hard digraph: digraph + '..' }
+        if (copy(inputQuery, idx + 2, 2) = '..') and
+          fDigraphs.ContainsKey(copy(inputQuery, idx, 2)) then begin
+            buffer := buffer + fDigraphs[copy(inputQuery, idx, 2)] + '꧀ ';
+            inc(idx, 4);
+            continue
+          end;
+
       if (trigraph <> '') and (copy(trigraph, 2, 2) = '..') then begin
         if fLetters.ContainsKey(trigraph[1]) then begin
           buffer := buffer + fLetters[trigraph[1]] + '꧀ ';
