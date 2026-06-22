@@ -15,7 +15,9 @@ type
 
   { TForm1 }
   TForm1 = class(TForm)
+    Button1: TButton;
     InputEdit: TEdit;
+    Label1: TLabel;
     OutputMemo: TMemo;
 
     procedure FormShow(Sender: TObject);
@@ -182,6 +184,7 @@ begin
 
         if fLetterPairs.ContainsKey(letter) then
           buffer := buffer + fLetterPairs[letter]
+        else if letter = ' ' then
         else
           buffer := buffer + letter;
 
