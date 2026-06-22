@@ -197,6 +197,8 @@ begin
 
       if fLetterPairs.ContainsKey(letter) then
         buffer := buffer + fLetterPairs[letter]
+      else if letter = ',' then
+        buffer := buffer + '꧈ '
       else if letter = ' ' then
       else
         buffer := buffer + letter;
