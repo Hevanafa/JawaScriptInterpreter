@@ -182,14 +182,18 @@ begin
       if idx + 2 <= len then
         trigraph := letter + inputQuery[idx + 1] + inputQuery[idx + 2];
 
-      { Begin handle special cases }
+      { Special cases }
+
+      if digraph = '..' then begin
+        buffer := buffer + '꧀ ';
+        inc(idx, 2);
+        continue
+      end;
+
+      { Trigraphs }
+
       if trigraph <> '' then begin
-        if fTrigraphs.ContainsKey(trigraph) then begin
-          buffer := buffer + fTrigraphs[trigraph];
-          inc(idx, 3);
-          continue
-        end
-        else if trigraph = ' . ' then begin
+        if trigraph = ' . ' then begin
           buffer := buffer + FullStop;
           inc(idx, 3);
           continue
@@ -201,21 +205,18 @@ begin
             inc(idx, 3);
             continue
           end;
-        end;
+        end
+        else if fTrigraphs.ContainsKey(trigraph) then begin
+          buffer := buffer + fTrigraphs[trigraph];
+          inc(idx, 3);
+          continue
+        end
       end;
 
+      { Digraphs }
+
       if digraph <> '' then begin
-        if fDigraphs.ContainsKey(digraph) then begin
-          buffer := buffer + fDigraphs[digraph];
-          inc(idx, 2);
-          continue
-        end
-        else if digraph = '..' then begin
-          buffer := buffer + '꧀ ';
-          inc(idx, 2);
-          continue
-        end
-        else if digraph = ' .' then begin
+        if digraph = ' .' then begin
           buffer := buffer + FullStop;
           inc(idx, 2);
           continue
@@ -227,29 +228,28 @@ begin
             inc(idx, 2);
             continue
           end;
-        end;
-      end;
-
-      { Regular letter processing }
-      if (digraph <> '') then begin
-        if fLetters.ContainsKey(digraph) then begin
-          buffer := buffer + fLetters[digraph];
+        end
+        else if fDigraphs.ContainsKey(digraph) then begin
+          buffer := buffer + fDigraphs[digraph];
           inc(idx, 2);
           continue
         end;
       end;
 
-      if fLetters.ContainsKey(letter) then
-        buffer := buffer + fLetters[letter]
-      else if letter = 'q' then
+      { Regular letter processing }
+
+      if letter = 'q' then
         buffer := buffer + 'ꧏ '
       else if letter = ',' then
         buffer := buffer + '꧈'
       else if (letter = '+') or (letter = '^') then
         buffer := buffer + '꧇'
-      else if letter = ' ' then
+      else if fLetters.ContainsKey(letter) then
+        buffer := buffer + fLetters[letter];
+
+      { else if letter = ' ' then
       else
-        buffer := buffer + letter;
+        buffer := buffer + letter; }
 
       inc(idx)
     end;
