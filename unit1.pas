@@ -22,7 +22,7 @@ type
     procedure InputEditChange(Sender: TObject);
     procedure InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
-    letters: TStringDictionary;
+    fLetterPairs: TStringDictionary;
 
   public
 
@@ -45,10 +45,16 @@ begin
   InputEdit.clear;
   OutputEdit.clear;
 
-  letters := TStringDictionary.create;
+  fLetterPairs := TStringDictionary.create;
 
-  letters.Add('h', 'ꦲ');
-  letters.add('n', 'ꦤ');
+  fLetterPairs.Add('h', 'ꦲ');
+  fLetterPairs.add('n', 'ꦤ');
+
+  fLetterPairs.add('dh', 'ꦝ');
+  fLetterPairs.add('ny', 'ꦚ');
+  fLetterPairs.add('th', 'ꦛ');
+  fLetterPairs.add('ng', 'ꦔ');
+  { fLetterPairs.add('', ''); }
 end;
 
 procedure TForm1.InputEditChange(Sender: TObject);
@@ -57,7 +63,10 @@ end;
 
 procedure TForm1.InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
+  inputQuery: string;
   buffer: string;
+  letter, nextLetter: string;
+  digraph: string;
   idx: word;
   len: smallint;
 begin
@@ -65,16 +74,32 @@ begin
     OutputEdit.clear;
 
     buffer := '';
+    inputQuery := InputEdit.text;
     len := length(InputEdit.text);
 
     if len > 0 then begin
       idx := 1;
 
       while idx <= len do begin
-        if letters.ContainsKey(InputEdit.text[idx]) then
-          buffer := buffer + letters[inputedit.Text[idx]]
+        letter := inputQuery[idx];
+        nextLetter := '';
+
+        { peek }
+        if idx + 1 <= len then begin
+          nextLetter := inputQuery[idx + 1];
+          digraph := letter + nextLetter;
+
+          if fLetterPairs.ContainsKey(digraph) then begin
+            buffer := buffer + fLetterPairs[digraph];
+            inc(idx, 2);
+            continue
+          end;
+        end;
+
+        if fLetterPairs.ContainsKey(letter) then
+          buffer := buffer + fLetterPairs[letter]
         else
-          buffer := buffer + InputEdit.Text[idx];
+          buffer := buffer + letter;
 
         inc(idx)
       end;
