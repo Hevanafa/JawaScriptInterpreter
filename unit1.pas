@@ -88,7 +88,7 @@ var
   inputQuery: string;
   buffer: string;
   letter, nextLetter, prevLetter: string;
-  digraph: string;
+  digraph, trigraph: string;
   idx: word;
   len: smallint;
 begin
@@ -113,6 +113,7 @@ begin
         prevLetter := '';
         nextLetter := '';
         digraph := '';
+        trigraph := '';
 
         if idx - 1 > 0 then
           prevLetter := inputQuery[idx];
@@ -122,13 +123,55 @@ begin
           digraph := letter + nextLetter
         end;
 
-        if letter = ' ' then
-          if nextLetter = '.' then begin
+        if idx + 2 <= len then
+          trigraph := letter + inputQuery[idx + 1] + inputQuery[idx + 2];
+
+        { Begin handle special cases }
+        if trigraph <> '' then begin
+          if trigraph = ' . ' then begin
+            buffer := buffer + FullStop;
+            inc(idx, 3);
+            continue
+          end
+          else if trigraph = 'ng.' then begin
+            buffer := buffer + 'ꦁ';
+            inc(idx, 3);
+            continue
+          end
+          else if trigraph[3] = '.' then begin
+            if fLetterPairs.ContainsKey(digraph) then begin
+              { Trigger pangkon (coda) }
+              buffer := buffer + fLetterPairs[digraph] + '꧀';
+              inc(idx, 3);
+              continue
+            end;
+          end;
+        end;
+
+        if digraph <> '' then begin
+          if digraph = 'r.' then begin
+            buffer := buffer + 'ꦂ';
+            inc(idx, 2);
+            continue
+          end
+          else if digraph = 'h.' then begin
+            buffer := buffer + 'ꦃ';
+            inc(idx, 2);
+            continue
+          end
+          else if digraph = ' .' then begin
             buffer := buffer + FullStop;
             inc(idx, 2);
             continue
+          end else if nextLetter = '.' then begin
+            { Trigger pangkon (coda) }
+            buffer := buffer + fLetterPairs[letter] + '꧀';
+            inc(idx, 2);
+            continue
           end;
+        end;
 
+        { Regular letter processing }
         if (digraph <> '') then begin
           if fLetterPairs.ContainsKey(digraph) then begin
             buffer := buffer + fLetterPairs[digraph];
