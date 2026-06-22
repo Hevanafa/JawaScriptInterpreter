@@ -108,6 +108,10 @@ begin
   fDigraphs.add('r.', 'ꦂ');
   fDigraphs.add('h.', 'ꦃ');
 
+  { pa cerek & nga lelet }
+  fDigraphs.add('re', 'ꦉ');
+  fDigraphs.add('le', 'ꦊ');
+
   { sandhangan wyanjana }
   fTrigraphs.add('*re', 'ꦽ');
 
