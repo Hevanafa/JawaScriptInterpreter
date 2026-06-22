@@ -200,7 +200,9 @@ begin
       else if letter = 'q' then
         buffer := buffer + 'ꧏ '
       else if letter = ',' then
-        buffer := buffer + '꧈ '
+        buffer := buffer + '꧈'
+      else if (letter = '+') or (letter = '^') then
+        buffer := buffer + '꧇'
       else if letter = ' ' then
       else
         buffer := buffer + letter;
