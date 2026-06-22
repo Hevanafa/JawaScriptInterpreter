@@ -3,7 +3,7 @@ object Form1: TForm1
   Height = 240
   Top = 250
   Width = 320
-  Caption = 'Form1'
+  Caption = 'Jawa Script Interpreter v0.1'
   ClientHeight = 240
   ClientWidth = 320
   LCLVersion = '4.6.0.0'
@@ -13,15 +13,17 @@ object Form1: TForm1
     Height = 23
     Top = 4
     Width = 312
+    Anchors = [akTop, akLeft, akRight]
     TabOrder = 0
     Text = 'InputEdit'
     OnKeyDown = InputEditKeyDown
   end
   object OutputMemo: TMemo
     Left = 4
-    Height = 194
+    Height = 158
     Top = 36
     Width = 310
+    Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
     Font.Height = -19
     Font.Name = 'Noto Sans Javanese'
@@ -33,5 +35,22 @@ object Form1: TForm1
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
+  end
+  object Button1: TButton
+    Left = 240
+    Height = 33
+    Top = 200
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Caption = '&Copy'
+    TabOrder = 2
+  end
+  object Label1: TLabel
+    Left = 8
+    Height = 15
+    Top = 208
+    Width = 122
+    Anchors = [akLeft, akBottom]
+    Caption = 'By Hevanafa (Jun 2026)'
   end
 end
