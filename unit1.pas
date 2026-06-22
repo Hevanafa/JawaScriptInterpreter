@@ -117,7 +117,6 @@ begin
         if idx - 1 > 0 then
           prevLetter := inputQuery[idx];
 
-        { peek }
         if idx + 1 <= len then begin
           nextLetter := inputQuery[idx + 1];
           digraph := letter + nextLetter
@@ -130,24 +129,12 @@ begin
             continue
           end;
 
-        { if letter = '.' then begin
-          if (prevLetter = ' ') and (nextLetter = ' ') then begin
-            buffer := buffer + FullStop;
-            inc(idx, 3)
+        if (digraph <> '') then begin
+          if fLetterPairs.ContainsKey(digraph) then begin
+            buffer := buffer + fLetterPairs[digraph];
+            inc(idx, 2);
+            continue
           end;
-
-          if (idx = len) and (prevLetter = ' ') then begin
-            buffer := buffer + FullStop;
-            inc(idx)
-          end;
-
-          continue
-        end; }
-
-        if (digraph <> '') and fLetterPairs.ContainsKey(digraph) then begin
-          buffer := buffer + fLetterPairs[digraph];
-          inc(idx, 2);
-          continue
         end;
 
         if fLetterPairs.ContainsKey(letter) then
