@@ -22,6 +22,7 @@ type
 
     procedure CopyButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure InputEditChange(Sender: TObject);
     procedure InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     const
@@ -30,6 +31,7 @@ type
     var
       fLetterPairs: TStringDictionary;
 
+    procedure PerformTransliteration;
   public
 
   end;
@@ -97,7 +99,7 @@ begin
   MessageBox(0, 'Copied output to clipboard', 'Copy Output', MB_OK or MB_ICONINFORMATION)
 end;
 
-procedure TForm1.InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TForm1.PerformTransliteration;
 var
   inputQuery: string;
   buffer: string;
@@ -106,106 +108,115 @@ var
   idx: word;
   len: smallint;
 begin
-  if key = VK_RETURN then begin
-    OutputMemo.clear;
+  OutputMemo.clear;
 
-    buffer := '';
-    inputQuery := InputEdit.text;
-    len := length(InputEdit.text);
+  buffer := '';
+  inputQuery := InputEdit.text;
+  len := length(InputEdit.text);
 
-    if len > 0 then begin
-      idx := 1;
+  if len > 0 then begin
+    idx := 1;
 
-      while idx <= len do begin
-        letter := inputQuery[idx];
+    while idx <= len do begin
+      letter := inputQuery[idx];
 
-        if (letter = '-') or (letter = 'a') then begin
-          inc(idx);
-          continue
-        end;
-
-        prevLetter := '';
-        nextLetter := '';
-        digraph := '';
-        trigraph := '';
-
-        if idx - 1 > 0 then
-          prevLetter := inputQuery[idx];
-
-        if idx + 1 <= len then begin
-          nextLetter := inputQuery[idx + 1];
-          digraph := letter + nextLetter
-        end;
-
-        if idx + 2 <= len then
-          trigraph := letter + inputQuery[idx + 1] + inputQuery[idx + 2];
-
-        { Begin handle special cases }
-        if trigraph <> '' then begin
-          if trigraph = ' . ' then begin
-            buffer := buffer + FullStop;
-            inc(idx, 3);
-            continue
-          end
-          else if trigraph = 'ng.' then begin
-            buffer := buffer + 'ꦁ';
-            inc(idx, 3);
-            continue
-          end
-          else if trigraph[3] = '.' then begin
-            if fLetterPairs.ContainsKey(digraph) then begin
-              { Trigger pangkon (coda) }
-              buffer := buffer + fLetterPairs[digraph] + '꧀';
-              inc(idx, 3);
-              continue
-            end;
-          end;
-        end;
-
-        if digraph <> '' then begin
-          if digraph = 'r.' then begin
-            buffer := buffer + 'ꦂ';
-            inc(idx, 2);
-            continue
-          end
-          else if digraph = 'h.' then begin
-            buffer := buffer + 'ꦃ';
-            inc(idx, 2);
-            continue
-          end
-          else if digraph = ' .' then begin
-            buffer := buffer + FullStop;
-            inc(idx, 2);
-            continue
-          end else if nextLetter = '.' then begin
-            { Trigger pangkon (coda) }
-            buffer := buffer + fLetterPairs[letter] + '꧀';
-            inc(idx, 2);
-            continue
-          end;
-        end;
-
-        { Regular letter processing }
-        if (digraph <> '') then begin
-          if fLetterPairs.ContainsKey(digraph) then begin
-            buffer := buffer + fLetterPairs[digraph];
-            inc(idx, 2);
-            continue
-          end;
-        end;
-
-        if fLetterPairs.ContainsKey(letter) then
-          buffer := buffer + fLetterPairs[letter]
-        else if letter = ' ' then
-        else
-          buffer := buffer + letter;
-
-        inc(idx)
+      if (letter = '-') or (letter = 'a') then begin
+        inc(idx);
+        continue
       end;
 
-      OutputMemo.text := buffer
+      prevLetter := '';
+      nextLetter := '';
+      digraph := '';
+      trigraph := '';
+
+      if idx - 1 > 0 then
+        prevLetter := inputQuery[idx];
+
+      if idx + 1 <= len then begin
+        nextLetter := inputQuery[idx + 1];
+        digraph := letter + nextLetter
+      end;
+
+      if idx + 2 <= len then
+        trigraph := letter + inputQuery[idx + 1] + inputQuery[idx + 2];
+
+      { Begin handle special cases }
+      if trigraph <> '' then begin
+        if trigraph = ' . ' then begin
+          buffer := buffer + FullStop;
+          inc(idx, 3);
+          continue
+        end
+        else if trigraph = 'ng.' then begin
+          buffer := buffer + 'ꦁ';
+          inc(idx, 3);
+          continue
+        end
+        else if trigraph[3] = '.' then begin
+          if fLetterPairs.ContainsKey(digraph) then begin
+            { Trigger pangkon (coda) }
+            buffer := buffer + fLetterPairs[digraph] + '꧀';
+            inc(idx, 3);
+            continue
+          end;
+        end;
+      end;
+
+      if digraph <> '' then begin
+        if digraph = 'r.' then begin
+          buffer := buffer + 'ꦂ';
+          inc(idx, 2);
+          continue
+        end
+        else if digraph = 'h.' then begin
+          buffer := buffer + 'ꦃ';
+          inc(idx, 2);
+          continue
+        end
+        else if digraph = ' .' then begin
+          buffer := buffer + FullStop;
+          inc(idx, 2);
+          continue
+        end else if nextLetter = '.' then begin
+          { Trigger pangkon (coda) }
+          buffer := buffer + fLetterPairs[letter] + '꧀';
+          inc(idx, 2);
+          continue
+        end;
+      end;
+
+      { Regular letter processing }
+      if (digraph <> '') then begin
+        if fLetterPairs.ContainsKey(digraph) then begin
+          buffer := buffer + fLetterPairs[digraph];
+          inc(idx, 2);
+          continue
+        end;
+      end;
+
+      if fLetterPairs.ContainsKey(letter) then
+        buffer := buffer + fLetterPairs[letter]
+      else if letter = ' ' then
+      else
+        buffer := buffer + letter;
+
+      inc(idx)
     end;
+
+    OutputMemo.text := buffer
   end;
+end;
+
+procedure TForm1.InputEditChange(Sender: TObject);
+begin
+  PerformTransliteration
+end;
+
+procedure TForm1.InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if key = VK_RETURN then
+    PerformTransliteration;
 end;
 
 end.
