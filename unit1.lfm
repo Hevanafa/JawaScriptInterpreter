@@ -3,7 +3,7 @@ object Form1: TForm1
   Height = 240
   Top = 250
   Width = 320
-  Caption = 'Jawa Script Interpreter v0.1'
+  Caption = 'Jawa Script Interpreter v0.1.1'
   ClientHeight = 240
   ClientWidth = 320
   LCLVersion = '4.6.0.0'

@@ -19,7 +19,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="1"/>
-      <StringTable Comments="Javanese script DSL interpreter" CompanyName="Hevanafa" FileDescription="Javanese script DSL interpreter" InternalName="JawaScriptInterpreter" LegalCopyright="2026 Hevanafa" OriginalFilename="JawaScriptInterpreter" ProductName="JawaScriptInterpreter" ProductVersion="0.1"/>
+      <RevisionNr Value="1"/>
+      <StringTable Comments="Javanese script DSL interpreter" CompanyName="Hevanafa" FileDescription="Javanese script DSL interpreter" InternalName="JawaScriptInterpreter" LegalCopyright="2026 Hevanafa" OriginalFilename="JawaScriptInterpreter" ProductName="JawaScriptInterpreter" ProductVersion="0.1.1"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Debug" Default="True"/>
