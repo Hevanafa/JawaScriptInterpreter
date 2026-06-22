@@ -6,18 +6,33 @@ Jawa Script Interpreter (JSI) is a literal input system / DSL for writing Aksara
 
 It prioritises predictable output over natural Latin readability.  The source text may look unusual, but every token maps directly to an Aksara Jawa letter, sandhangan, pasangan, punctuation, or number
 
-# Examples
+# Quick Examples
 
+**Example 1**
+
+JSI source:
 
 `hkuwis.ngeeom.beebnyu`
 
+Output:
+
 ꦲꦏꦸꦮꦶꦱ꧀ꦔꦺꦴꦩ꧀ꦧꦺꦧꦚꦸ
+
+Meaning:
 
 "Aku wis ngombé banyu"
 
+**Example 2**
+
+JSI source:
+
 `bsjwhikusugih.budhy`
 
+Output:
+
 ꦧꦱꦗꦮꦲꦶꦏꦸꦱꦸꦒꦶꦃꦧꦸꦝꦪ
+
+Meaning:
 
 "Basa Jawa iku sugih budhaya"
 

@@ -12,14 +12,14 @@
       <XPManifest>
         <DpiAware Value="True"/>
         <TextName Value="com.hevanafa.jawa_script_interpreter"/>
-        <TextDesc Value="Literal Javanese script interpreter"/>
+        <TextDesc Value="Javanese script DSL interpreter"/>
       </XPManifest>
       <Icon Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="1"/>
-      <StringTable Comments="Literal Javanese script interpreter" CompanyName="Hevanafa" FileDescription="Literal Javanese script interpreter" InternalName="JawaScriptInterpreter" LegalCopyright="2026 Hevanafa" OriginalFilename="JawaScriptInterpreter" ProductName="JawaScriptInterpreter" ProductVersion="0.1"/>
+      <StringTable Comments="Javanese script DSL interpreter" CompanyName="Hevanafa" FileDescription="Javanese script DSL interpreter" InternalName="JawaScriptInterpreter" LegalCopyright="2026 Hevanafa" OriginalFilename="JawaScriptInterpreter" ProductName="JawaScriptInterpreter" ProductVersion="0.1"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Debug" Default="True"/>
@@ -28,7 +28,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="project"/>
+            <Filename Value="JawaScriptInterpreter"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -87,7 +87,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="project"/>
+      <Filename Value="JawaScriptInterpreter_debug"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
