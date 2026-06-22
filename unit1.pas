@@ -29,7 +29,9 @@ type
       FullStop = '꧉';
 
     var
-      fLetters: TStringDictionary;
+      fTrigraphs,
+      fDigraphs,
+      fLetters,
       fNumberPairs: TStringDictionary;
 
     procedure PerformTransliteration;
@@ -54,10 +56,13 @@ begin
   InputEdit.clear;
   OutputMemo.clear;
 
+  fTrigraphs := TStringDictionary.create;
+  fDigraphs := TStringDictionary.create;
   fLetters := TStringDictionary.create;
+
   fNumberPairs := TStringDictionary.create;
 
-  fLetters.Add('h', 'ꦲ');
+  fLetters.add('h', 'ꦲ');
   fLetters.add('n', 'ꦤ');
   fLetters.add('c', 'ꦕ');
   fLetters.add('r', 'ꦫ');
@@ -70,18 +75,18 @@ begin
   fLetters.add('l', 'ꦭ');
 
   fLetters.add('p', 'ꦥ');
-  fLetters.add('dh', 'ꦝ');
+  fDigraphs.add('dh', 'ꦝ');
   fLetters.add('j', 'ꦗ');
   fLetters.add('y', 'ꦪ');
-  fLetters.add('ny', 'ꦚ');
+  fDigraphs.add('ny', 'ꦚ');
 
   fLetters.add('m', 'ꦩ');
   fLetters.add('g', 'ꦒ');
   fLetters.add('b', 'ꦧ');
-  fLetters.add('th', 'ꦛ');
-  fLetters.add('ng', 'ꦔ');
+  fDigraphs.add('th', 'ꦛ');
+  fDigraphs.add('ng', 'ꦔ');
 
-  fLetters.add('ee', 'ꦺ');
+  fDigraphs.add('ee', 'ꦺ');
   fLetters.add('e', 'ꦼ');
   fLetters.add('i', 'ꦶ');
   fLetters.add('o', 'ꦴ');
@@ -98,6 +103,13 @@ begin
   fNumberPairs.add('7', '꧗');
   fNumberPairs.add('8', '꧘');
   fNumberPairs.add('9', '꧙');
+
+  fTrigraphs.add('*re', 'ꦽ');
+
+  fDigraphs.add('*r', 'ꦿ');
+  fDigraphs.add('*y', 'ꦾ');
+  fDigraphs.add('*l', '꧀ꦭ');
+  fDigraphs.add('*w', '꧀ꦮ');
 
   { fNumberPairs.add('', ''); }
 end;
