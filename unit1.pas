@@ -15,11 +15,12 @@ type
 
   { TForm1 }
   TForm1 = class(TForm)
-    Button1: TButton;
+    CopyButton: TButton;
     InputEdit: TEdit;
     Label1: TLabel;
     OutputMemo: TMemo;
 
+    procedure CopyButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
@@ -39,7 +40,7 @@ var
 implementation
 
 uses
-  LCLType, Windows;
+  Clipbrd, LCLType, Windows;
 
 {$R *.lfm}
 
@@ -83,6 +84,17 @@ begin
   fLetterPairs.add('u', 'ꦸ');
 
   { fLetterPairs.add('', ''); }
+end;
+
+procedure TForm1.CopyButtonClick(Sender: TObject);
+begin
+  if trim(OutputMemo.text) = '' then begin
+    MessageBox(0, 'Nothing to copy!', 'Copy Output', MB_OK or MB_ICONINFORMATION);
+    exit
+  end;
+
+  Clipboard.AsText := OutputMemo.text;
+  MessageBox(0, 'Copied output to clipboard', 'Copy Output', MB_OK or MB_ICONINFORMATION)
 end;
 
 procedure TForm1.InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
