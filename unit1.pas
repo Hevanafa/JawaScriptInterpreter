@@ -105,7 +105,10 @@ begin
   fNumberPairs.add('9', '꧙');
 
   fTrigraphs.add('ng.', 'ꦁ');
+  fDigraphs.add('r.', 'ꦂ');
+  fDigraphs.add('h.', 'ꦃ');
 
+  { sandhangan wyanjana }
   fTrigraphs.add('*re', 'ꦽ');
 
   fDigraphs.add('*r', 'ꦿ');
@@ -198,13 +201,8 @@ begin
       end;
 
       if digraph <> '' then begin
-        if digraph = 'r.' then begin
-          buffer := buffer + 'ꦂ';
-          inc(idx, 2);
-          continue
-        end
-        else if digraph = 'h.' then begin
-          buffer := buffer + 'ꦃ';
+        if fDigraphs.ContainsKey(digraph) then begin
+          buffer := buffer + fDigraphs[digraph];
           inc(idx, 2);
           continue
         end
@@ -212,7 +210,8 @@ begin
           buffer := buffer + FullStop;
           inc(idx, 2);
           continue
-        end else if nextLetter = '.' then begin
+        end
+        else if nextLetter = '.' then begin
           { Trigger pangkon (coda) for 1 letter }
           if fLetters.ContainsKey(letter) then begin
             buffer := buffer + fLetters[letter] + '꧀';
