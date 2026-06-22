@@ -57,7 +57,6 @@ end;
 
 procedure TForm1.InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
-  a: Word;
   buffer: string;
   idx: word;
   len: smallint;
@@ -65,17 +64,22 @@ begin
   if key = VK_RETURN then begin
     OutputEdit.clear;
 
-    len := UTF8Length(InputEdit.text);
+    buffer := '';
+    len := length(InputEdit.text);
 
     if len > 0 then begin
-      idx := 0;
+      idx := 1;
 
-      while idx < len do begin
-        { if letters.ContainsKey(InputEdit.text[a]) then
-          OutputEdit.text := OutputEdit.text + letters[inputedit.Text[a]]; }
+      while idx <= len do begin
+        if letters.ContainsKey(InputEdit.text[idx]) then
+          buffer := buffer + letters[inputedit.Text[idx]]
+        else
+          buffer := buffer + InputEdit.Text[idx];
 
         inc(idx)
       end;
+
+      OutputEdit.text := buffer
     end;
   end;
 end;
