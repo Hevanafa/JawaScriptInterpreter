@@ -19,7 +19,6 @@ type
     OutputMemo: TMemo;
 
     procedure FormShow(Sender: TObject);
-    procedure InputEditChange(Sender: TObject);
     procedure InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     const
@@ -74,11 +73,14 @@ begin
   fLetterPairs.add('b', 'ꦧ');
   fLetterPairs.add('th', 'ꦛ');
   fLetterPairs.add('ng', 'ꦔ');
-  { fLetterPairs.add('', ''); }
-end;
 
-procedure TForm1.InputEditChange(Sender: TObject);
-begin
+  fLetterPairs.add('ee', 'ꦺ');
+  fLetterPairs.add('e', 'ꦼ');
+  fLetterPairs.add('i', 'ꦶ');
+  fLetterPairs.add('o', 'ꦴ');
+  fLetterPairs.add('u', 'ꦸ');
+
+  { fLetterPairs.add('', ''); }
 end;
 
 procedure TForm1.InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -103,11 +105,10 @@ begin
       while idx <= len do begin
         letter := inputQuery[idx];
 
-        if letter = '-' then begin
+        if (letter = '-') or (letter = 'a') then begin
           inc(idx);
           continue
         end;
-
 
         prevLetter := '';
         nextLetter := '';
