@@ -29,7 +29,7 @@ type
       FullStop = '꧉';
 
     var
-      fLetterPairs: TStringDictionary;
+      fLetters: TStringDictionary;
       fNumberPairs: TStringDictionary;
 
     procedure PerformTransliteration;
@@ -54,38 +54,38 @@ begin
   InputEdit.clear;
   OutputMemo.clear;
 
-  fLetterPairs := TStringDictionary.create;
+  fLetters := TStringDictionary.create;
   fNumberPairs := TStringDictionary.create;
 
-  fLetterPairs.Add('h', 'ꦲ');
-  fLetterPairs.add('n', 'ꦤ');
-  fLetterPairs.add('c', 'ꦕ');
-  fLetterPairs.add('r', 'ꦫ');
-  fLetterPairs.add('k', 'ꦏ');
+  fLetters.Add('h', 'ꦲ');
+  fLetters.add('n', 'ꦤ');
+  fLetters.add('c', 'ꦕ');
+  fLetters.add('r', 'ꦫ');
+  fLetters.add('k', 'ꦏ');
 
-  fLetterPairs.add('d', 'ꦢ');
-  fLetterPairs.add('t', 'ꦠ');
-  fLetterPairs.add('s', 'ꦱ');
-  fLetterPairs.add('w', 'ꦮ');
-  fLetterPairs.add('l', 'ꦭ');
+  fLetters.add('d', 'ꦢ');
+  fLetters.add('t', 'ꦠ');
+  fLetters.add('s', 'ꦱ');
+  fLetters.add('w', 'ꦮ');
+  fLetters.add('l', 'ꦭ');
 
-  fLetterPairs.add('p', 'ꦥ');
-  fLetterPairs.add('dh', 'ꦝ');
-  fLetterPairs.add('j', 'ꦗ');
-  fLetterPairs.add('y', 'ꦪ');
-  fLetterPairs.add('ny', 'ꦚ');
+  fLetters.add('p', 'ꦥ');
+  fLetters.add('dh', 'ꦝ');
+  fLetters.add('j', 'ꦗ');
+  fLetters.add('y', 'ꦪ');
+  fLetters.add('ny', 'ꦚ');
 
-  fLetterPairs.add('m', 'ꦩ');
-  fLetterPairs.add('g', 'ꦒ');
-  fLetterPairs.add('b', 'ꦧ');
-  fLetterPairs.add('th', 'ꦛ');
-  fLetterPairs.add('ng', 'ꦔ');
+  fLetters.add('m', 'ꦩ');
+  fLetters.add('g', 'ꦒ');
+  fLetters.add('b', 'ꦧ');
+  fLetters.add('th', 'ꦛ');
+  fLetters.add('ng', 'ꦔ');
 
-  fLetterPairs.add('ee', 'ꦺ');
-  fLetterPairs.add('e', 'ꦼ');
-  fLetterPairs.add('i', 'ꦶ');
-  fLetterPairs.add('o', 'ꦴ');
-  fLetterPairs.add('u', 'ꦸ');
+  fLetters.add('ee', 'ꦺ');
+  fLetters.add('e', 'ꦼ');
+  fLetters.add('i', 'ꦶ');
+  fLetters.add('o', 'ꦴ');
+  fLetters.add('u', 'ꦸ');
 
   fNumberPairs.add('0', '꧐');
   fNumberPairs.add('1', '꧑');
@@ -174,9 +174,9 @@ begin
           continue
         end
         else if trigraph[3] = '.' then begin
-          if fLetterPairs.ContainsKey(digraph) then begin
+          if fLetters.ContainsKey(digraph) then begin
             { Trigger pangkon (coda) }
-            buffer := buffer + fLetterPairs[digraph] + '꧀';
+            buffer := buffer + fLetters[digraph] + '꧀';
             inc(idx, 3);
             continue
           end;
@@ -200,8 +200,8 @@ begin
           continue
         end else if nextLetter = '.' then begin
           { Trigger pangkon (coda) for 1 letter }
-          if fLetterPairs.ContainsKey(letter) then begin
-            buffer := buffer + fLetterPairs[letter] + '꧀';
+          if fLetters.ContainsKey(letter) then begin
+            buffer := buffer + fLetters[letter] + '꧀';
             inc(idx, 2);
             continue
           end;
@@ -210,15 +210,15 @@ begin
 
       { Regular letter processing }
       if (digraph <> '') then begin
-        if fLetterPairs.ContainsKey(digraph) then begin
-          buffer := buffer + fLetterPairs[digraph];
+        if fLetters.ContainsKey(digraph) then begin
+          buffer := buffer + fLetters[digraph];
           inc(idx, 2);
           continue
         end;
       end;
 
-      if fLetterPairs.ContainsKey(letter) then
-        buffer := buffer + fLetterPairs[letter]
+      if fLetters.ContainsKey(letter) then
+        buffer := buffer + fLetters[letter]
       else if letter = 'q' then
         buffer := buffer + 'ꧏ '
       else if letter = ',' then
