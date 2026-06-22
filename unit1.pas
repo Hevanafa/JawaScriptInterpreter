@@ -155,10 +155,10 @@ begin
     while idx <= len do begin
       letter := inputQuery[idx];
 
-      if (letter = '-') or (letter = 'a') then begin
+      { if (letter = '-') or (letter = 'a') then begin
         inc(idx);
         continue
-      end;
+      end; }
 
       if letter[1] in ['0'..'9'] then begin
         buffer := buffer + fNumberPairs[letter];
@@ -184,10 +184,12 @@ begin
 
       { Special cases }
 
-      if digraph = '..' then begin
-        buffer := buffer + '꧀ ';
-        inc(idx, 2);
-        continue
+      if (trigraph <> '') and (copy(trigraph, 2, 2) = '..') then begin
+        if fLetters.ContainsKey(trigraph[1]) then begin
+          buffer := buffer + fLetters[trigraph[1]] + '꧀ ';
+          inc(idx, 3);
+          continue
+        end;
       end;
 
       { Trigraphs }
