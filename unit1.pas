@@ -199,10 +199,12 @@ begin
           inc(idx, 2);
           continue
         end else if nextLetter = '.' then begin
-          { Trigger pangkon (coda) }
-          buffer := buffer + fLetterPairs[letter] + '꧀';
-          inc(idx, 2);
-          continue
+          { Trigger pangkon (coda) for 1 letter }
+          if fLetterPairs.ContainsKey(letter) then begin
+            buffer := buffer + fLetterPairs[letter] + '꧀';
+            inc(idx, 2);
+            continue
+          end;
         end;
       end;
 
