@@ -210,6 +210,11 @@ begin
           inc(idx, 2);
           continue
         end
+        else if digraph = '..' then begin
+          buffer := buffer + '꧀ ';
+          inc(idx, 2);
+          continue
+        end
         else if digraph = ' .' then begin
           buffer := buffer + FullStop;
           inc(idx, 2);
