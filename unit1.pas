@@ -16,7 +16,7 @@ type
   { TForm1 }
   TForm1 = class(TForm)
     InputEdit: TEdit;
-    OutputEdit: TEdit;
+    OutputMemo: TMemo;
 
     procedure FormShow(Sender: TObject);
     procedure InputEditChange(Sender: TObject);
@@ -47,15 +47,31 @@ uses
 procedure TForm1.FormShow(Sender: TObject);
 begin
   InputEdit.clear;
-  OutputEdit.clear;
+  OutputMemo.clear;
 
   fLetterPairs := TStringDictionary.create;
 
   fLetterPairs.Add('h', 'ꦲ');
   fLetterPairs.add('n', 'ꦤ');
+  fLetterPairs.add('c', 'ꦕ');
+  fLetterPairs.add('r', 'ꦫ');
+  fLetterPairs.add('k', 'ꦏ');
 
+  fLetterPairs.add('d', 'ꦢ');
+  fLetterPairs.add('t', 'ꦠ');
+  fLetterPairs.add('s', 'ꦱ');
+  fLetterPairs.add('w', 'ꦮ');
+  fLetterPairs.add('l', 'ꦭ');
+
+  fLetterPairs.add('p', 'ꦥ');
   fLetterPairs.add('dh', 'ꦝ');
+  fLetterPairs.add('j', 'ꦗ');
+  fLetterPairs.add('y', 'ꦪ');
   fLetterPairs.add('ny', 'ꦚ');
+
+  fLetterPairs.add('m', 'ꦩ');
+  fLetterPairs.add('g', 'ꦒ');
+  fLetterPairs.add('b', 'ꦧ');
   fLetterPairs.add('th', 'ꦛ');
   fLetterPairs.add('ng', 'ꦔ');
   { fLetterPairs.add('', ''); }
@@ -75,7 +91,7 @@ var
   len: smallint;
 begin
   if key = VK_RETURN then begin
-    OutputEdit.clear;
+    OutputMemo.clear;
 
     buffer := '';
     inputQuery := InputEdit.text;
@@ -86,6 +102,12 @@ begin
 
       while idx <= len do begin
         letter := inputQuery[idx];
+
+        if letter = '-' then begin
+          inc(idx);
+          continue
+        end;
+
 
         prevLetter := '';
         nextLetter := '';
@@ -135,7 +157,7 @@ begin
         inc(idx)
       end;
 
-      OutputEdit.text := buffer
+      OutputMemo.text := buffer
     end;
   end;
 end;
