@@ -104,6 +104,8 @@ begin
   fNumberPairs.add('8', '꧘');
   fNumberPairs.add('9', '꧙');
 
+  fTrigraphs.add('ng.', 'ꦁ');
+
   fTrigraphs.add('*re', 'ꦽ');
 
   fDigraphs.add('*r', 'ꦿ');
@@ -175,13 +177,13 @@ begin
 
       { Begin handle special cases }
       if trigraph <> '' then begin
-        if trigraph = ' . ' then begin
-          buffer := buffer + FullStop;
+        if fTrigraphs.ContainsKey(trigraph) then begin
+          buffer := buffer + fTrigraphs[trigraph];
           inc(idx, 3);
           continue
         end
-        else if trigraph = 'ng.' then begin
-          buffer := buffer + 'ꦁ';
+        else if trigraph = ' . ' then begin
+          buffer := buffer + FullStop;
           inc(idx, 3);
           continue
         end
