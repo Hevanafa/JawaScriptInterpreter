@@ -55,4 +55,10 @@ object Form1: TForm1
     Anchors = [akLeft, akBottom]
     Caption = 'By Hevanafa (Jun 2026)'
   end
+  object CopyTimer: TTimer
+    Enabled = False
+    OnTimer = CopyTimerTimer
+    Left = 204
+    Top = 204
+  end
 end

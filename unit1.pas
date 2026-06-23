@@ -7,7 +7,7 @@ interface
 
 uses
   Classes, SysUtils, Forms,
-  Controls, Graphics, Dialogs, StdCtrls,
+  Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
   FGL, Generics.Collections, LazUTF8;
 
 type
@@ -19,8 +19,10 @@ type
     InputEdit: TEdit;
     Label1: TLabel;
     OutputMemo: TMemo;
+    CopyTimer: TTimer;
 
     procedure CopyButtonClick(Sender: TObject);
+    procedure CopyTimerTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure InputEditChange(Sender: TObject);
     procedure InputEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -125,13 +127,29 @@ end;
 
 procedure TForm1.CopyButtonClick(Sender: TObject);
 begin
-  if trim(OutputMemo.text) = '' then begin
+  { if trim(OutputMemo.text) = '' then begin
     MessageBox(0, 'Nothing to copy!', 'Copy Output', MB_OK or MB_ICONINFORMATION);
     exit
   end;
 
   Clipboard.AsText := OutputMemo.text;
   MessageBox(0, 'Copied output to clipboard', 'Copy Output', MB_OK or MB_ICONINFORMATION)
+  }
+
+  { CopyButton.Color := clGreen; }
+  Clipboard.AsText := OutputMemo.text;
+
+  CopyButton.caption := 'Copied!';
+  CopyButton.Enabled := false;
+
+  CopyTimer.Enabled := true
+end;
+
+procedure TForm1.CopyTimerTimer(Sender: TObject);
+begin
+  { CopyButton.Color := clWhite; }
+  CopyButton.caption := 'Copy';
+  CopyButton.Enabled := true
 end;
 
 procedure TForm1.PerformTransliteration;
